@@ -1,0 +1,10 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+<div class="row row-3">
+    #foreach($service in $services)
+        <div class="col">
+            <p>$service.getName()</p>
+        </div>
+    #end
+</div>
+#end

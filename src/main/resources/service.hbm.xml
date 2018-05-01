@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping
+        PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        " http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="app.service.Service" table="services">
+        <id name="id" type="int" column="ID">
+            <generator class="identity" />
+        </id>
+
+        <!--<property name="name" type="string">-->
+            <!--<column name="NAME" length="100" not-null="true" />-->
+        <!--</property>-->
+
+        <property name = "name" column = "name" type = "string"/>
+        <property name = "price" column = "price" type = "double"/>
+    </class>
+</hibernate-mapping>

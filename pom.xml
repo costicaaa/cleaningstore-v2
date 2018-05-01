@@ -76,6 +76,14 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.3m</version>
         </dependency>
+
+        <!--HIBERNATE-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.17.Final</version>
+        </dependency>
+
     </dependencies>
 
 </project>

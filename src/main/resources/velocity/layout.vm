@@ -9,7 +9,7 @@
 <body>
 <header>
     <nav>
-        <a href="$WebPath.getINDEX()"><img id="logo" src="/img/logo.png" alt="Spark Library"></a>
+        <a href="$WebPath.getINDEX()"><img id="logo" src="/img/logo.png" alt="Spark Librarysss"></a>
         <ul id="chooseLanguage">
             <form>
                 <li>
