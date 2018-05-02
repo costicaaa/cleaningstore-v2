@@ -3,10 +3,12 @@ package app;
 import app.book.*;
 import app.index.*;
 import app.login.*;
+import app.receipt.ReceiptController;
 import app.ticket.TicketController;
 import app.user.*;
 import app.util.*;
 import app.service.*;
+import app.receipt.*;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.*;
@@ -22,6 +24,7 @@ public class Application {
     public static BookDao bookDao;
     public static UserDao userDao;
     public static ServiceDao serviceDao;
+    public static ReceiptDao receiptDao;
 
     public static void main(String[] args) {
 
@@ -31,6 +34,8 @@ public class Application {
         bookDao = new BookDao();
         userDao = new UserDao();
         serviceDao = new ServiceDao();
+        receiptDao = new ReceiptDao();
+
 
 
 
@@ -52,8 +57,10 @@ public class Application {
         post(Path.Web.LOGIN,         LoginController.handleLoginPost);
         post(Path.Web.LOGOUT,        LoginController.handleLogoutPost);
 
-        get(Path.Web.TICKETS_ADD,        TicketController.serveAddPage);
-        get(Path.Web.TICKETS,        TicketController.serveIndexPage);
+
+        get(  Path.Web.RECEIPTS_ADD,        ReceiptController.serveAddPage);
+        get(  Path.Web.RECEIPTS,        ReceiptController.serveIndexPage);
+        post( Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
 
 
         get("*",                     ViewUtil.notFound);
