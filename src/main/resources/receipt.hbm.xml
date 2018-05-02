@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping
+        PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        " http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="app.receipt.Receipt" table="receipts">
+        <id name="id" type="int" column="ID">
+            <generator class="identity" />
+        </id>
+
+        <!--<property name="name" type="string">-->
+            <!--<column name="NAME" length="100" not-null="true" />-->
+        <!--</property>-->
+
+        <property name = "customer_name" column = "customer_name" type = "string"/>
+        <property name = "customer_email" column = "customer_email" type = "string"/>
+        <property name = "price" column = "price" type = "double"/>
+        <property name = "entry_date" column = "entry_date" type = "java.util.Date"/>
+        <property name = "return_date" column = "return_date" type = "java.util.Date"/>
+
+    </class>
+</hibernate-mapping>

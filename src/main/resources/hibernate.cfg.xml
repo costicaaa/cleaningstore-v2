@@ -26,9 +26,12 @@
             asd123
         </property>
 
+        <property name="connection.autocommit">true</property>
+
         <!-- List of XML mapping files -->
         <!--<mapping resource = "User.hbm.xml"/>-->
         <mapping resource = "Service.hbm.xml"/>
+        <mapping resource = "Receipt.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

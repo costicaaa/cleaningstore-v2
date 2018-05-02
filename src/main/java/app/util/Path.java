@@ -13,9 +13,9 @@ public class Path {
         @Getter public static final String BOOKS = "/books/";
         @Getter public static final String ONE_BOOK = "/books/:isbn/";
 
-        @Getter public static final String TICKETS = "/tickets/";
-
-        @Getter public static final String TICKETS_ADD = "/tickets/add/";
+        @Getter public static final String RECEIPTS = "/receipts/";
+        @Getter public static final String RECEIPTS_ADD = "/receipts/add/";
+        @Getter public static final String RECEIPTS_STORE = "/receipts/store/";
 
     }
 
@@ -26,8 +26,8 @@ public class Path {
         public static final String BOOKS_ONE = "/velocity/book/one.vm";
         public static final String NOT_FOUND = "/velocity/notFound.vm";
 
-        public static final String TICKETS = "/velocity/ticket/all.vm";
-        public static final String TICKETS_ADD = "/velocity/ticket/add.vm";
+        public static final String RECEIPTS = "/velocity/receipt/all.vm";
+        public static final String RECEIPTS_ADD = "/velocity/receipt/add.vm";
     }
 
 }

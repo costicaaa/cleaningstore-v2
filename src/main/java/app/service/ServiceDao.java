@@ -32,6 +32,14 @@ public class ServiceDao extends HibernateUtility{
         return results;
 //        return services;
     }
+
+    public Service getServiceById(int id)
+    {
+        Session session = getSessionFactory().openSession();
+        Service service =  (Service) session.get(Service.class, id);
+        return service;
+
+    }
 //
 //    public Book getBookByIsbn(String isbn) {
 //        return books.stream().filter(b -> b.getIsbn().equals(isbn)).findFirst().orElse(null);
