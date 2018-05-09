@@ -1,17 +1,67 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-<h1>$msg.get("BOOKS_HEADING_ALL")</h1>
-##<div class="row row-3">
-##    #foreach($book in $books)
-##        <div class="col">
-##            <a class="book" href="$WebPath.getBOOKS()$book.getIsbn()">
-##                <div class="bookCover">
-##                    <img src="$book.getMediumCover()" alt="$book.getTitle()">
-##                </div>
-##                $msg.get("BOOKS_CAPTION", $book.getTitle(), $book.getAuthor())
-##            </a>
-##        </div>
-##    #end
-##</div>
-    gopmrsagposeporgopsope rpogpoe
+
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Receipts</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="block">
+            <table id="receiptsTable" class="table ">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Price</th>
+                    <th>Entry Date</th>
+                    <th>Return Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($receipt in $receipts)
+                    <tr>
+                        <td>$receipt.getId()</td>
+                        <td>$receipt.getCustomer_name()</td>
+                        <td>$receipt.getCustomer_email()</td>
+                        <td>$receipt.getPrice()</td>
+                        <td>
+                            $Utils.formatDate($receipt.getEntry_date())
+                        </td>
+                        <td>
+                            #if($receipt.getReturn_date())
+                                            $Utils.formatDate($receipt.getReturn_date())
+                                        #end
+                        </td>
+                        <td>
+                            <a class="btn btn-dark" href="#">View</a>
+                        </td>
+                    </tr>
+
+                    #end
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#receiptsTable').DataTable({
+            "lengthMenu": [500, 300, 200, 100, 75, 50, 25, 10],
+            "pageLength": 500,
+        });
+    });
+</script>
+
 #end

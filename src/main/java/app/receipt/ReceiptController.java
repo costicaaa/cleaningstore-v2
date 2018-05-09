@@ -4,6 +4,8 @@ import app.login.*;
 import app.util.*;
 import app.receipt.*;
 import spark.*;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static app.Application.*;
@@ -15,8 +17,17 @@ public class ReceiptController {
 
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("users", userDao.getAllUserNames());
-        model.put("book", bookDao.getRandomBook());
+        List<Receipt> receipts = receiptDao.getAllReceipts();
+        for(Receipt r : receipts)
+        {
+            Date tempD = r.getEntry_date();
+
+            SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(mdyFormat.format(tempD));
+//            System.out.println(tempD.);
+        }
+        model.put("receipts", receipts);
+
         return ViewUtil.render(request, model, Path.Template.RECEIPTS);
     };
 

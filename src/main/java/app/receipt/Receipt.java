@@ -7,8 +7,8 @@ public class Receipt {
     String customer_name;
     String customer_email;
     double price;
-     java.util.Date entry_date;
-     java.util.Date return_date;
+    java.util.Date entry_date;
+    java.util.Date return_date;
 
      public int getId() {
          return id;
@@ -57,4 +57,5 @@ public class Receipt {
      public void setReturn_date(java.util.Date return_date) {
          this.return_date = return_date;
      }
+
  }

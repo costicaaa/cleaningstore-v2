@@ -26,6 +26,10 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     #parse("/velocity/scripts.vm")
 
+##    datatables
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
 
     <style>
         .fa-times:hover {
@@ -34,6 +38,29 @@
         .select-dark-theme {
             background: #2E3035;
         }
+
+        table.dataTable tbody tr {
+            background-color: #2E3035 !important;
+        }
+
+        .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate{
+            color: #dcdcdc  !important;
+        }
+
+
+
+        .page-header {
+            margin-bottom: 0px !important;
+        }
+
+        .container-fluid {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
+
+
+
     </style>
 </head>
 <body>
@@ -226,8 +253,8 @@
             <li><a href="tables.html"> <i class="icon-grid"></i>Users </a></li>
             <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Tickets</a>
                 <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                    <li><a href="#">List</a></li>
-                    <li><a href="tickets-add">Add new +</a></li>
+                    <li><a href="$WebPath.getRECEIPTS()">Receipts</a></li>
+                    <li><a href="$WebPath.getRECEIPTS_ADD()">Add new +</a></li>
                     <li><a href="#">Search</a></li>
                 </ul>
             </li>

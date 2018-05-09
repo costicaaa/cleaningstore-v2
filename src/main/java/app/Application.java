@@ -61,8 +61,8 @@ public class Application {
         post(Path.Web.LOGOUT,        LoginController.handleLogoutPost);
 
 
-        get(  Path.Web.RECEIPTS_ADD,        ReceiptController.serveAddPage);
         get(  Path.Web.RECEIPTS,        ReceiptController.serveIndexPage);
+        get(  Path.Web.RECEIPTS_ADD,        ReceiptController.serveAddPage);
         post( Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
 
 
