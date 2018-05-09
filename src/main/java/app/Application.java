@@ -9,6 +9,7 @@ import app.user.*;
 import app.util.*;
 import app.service.*;
 import app.receipt.*;
+import app.item.*;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.*;
@@ -25,6 +26,7 @@ public class Application {
     public static UserDao userDao;
     public static ServiceDao serviceDao;
     public static ReceiptDao receiptDao;
+    public static ItemDao itemDao;
 
     public static void main(String[] args) {
 
@@ -35,6 +37,7 @@ public class Application {
         userDao = new UserDao();
         serviceDao = new ServiceDao();
         receiptDao = new ReceiptDao();
+        itemDao = new ItemDao();
 
 
 

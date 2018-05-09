@@ -11,7 +11,7 @@ import java.util.*;
 
 public class ReceiptDao extends HibernateUtility{
 
-    public void storeReceipt(Receipt receipt)
+    public void store(Receipt receipt)
     {
         getSessionFactory().openSession().save(receipt);
     }

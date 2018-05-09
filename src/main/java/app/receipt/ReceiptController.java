@@ -9,6 +9,7 @@ import java.util.*;
 import static app.Application.*;
 import static app.util.JsonUtil.*;
 import static app.util.RequestUtil.*;
+import app.item.*;
 
 public class ReceiptController {
 
@@ -40,7 +41,6 @@ public class ReceiptController {
         {
             app.service.Service temp = serviceDao.getServiceById(Integer.parseInt(s));
             total += temp.getPrice();
-            System.out.println(temp.getName() + "----" + temp.getPrice());
         }
         //end
 
@@ -49,9 +49,17 @@ public class ReceiptController {
         new_receipt.customer_email = email;
         new_receipt.price = total;
         new_receipt.entry_date = date;
+        receiptDao.store(new_receipt);
+        System.out.println("new receipt id ==== " + new_receipt.getId());
 
-        receiptDao.storeReceipt(new_receipt);
-        System.out.println("worked");
+        for(String s : services)
+        {
+            Item tempItem = new Item();
+            tempItem.setReceipt_id(new_receipt.getId());
+            tempItem.setService_id(Integer.parseInt(s));
+            itemDao.store(tempItem);
+
+        }
 
 
 
