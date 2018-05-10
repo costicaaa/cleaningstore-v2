@@ -14,6 +14,7 @@ public class Path {
         @Getter public static final String ONE_BOOK = "/books/:isbn/";
 
         @Getter public static final String RECEIPTS = "/receipts/";
+        @Getter public static final String RECEIPTS_VIEW = "/receipts/:id/";
         @Getter public static final String RECEIPTS_ADD = "/receipts/add/";
         @Getter public static final String RECEIPTS_STORE = "/receipts/store/";
 
@@ -27,6 +28,7 @@ public class Path {
         public static final String NOT_FOUND = "/velocity/notFound.vm";
 
         public static final String RECEIPTS = "/velocity/receipt/all.vm";
+        public static final String RECEIPTS_VIEW = "/velocity/receipt/view.vm";
         public static final String RECEIPTS_ADD = "/velocity/receipt/add.vm";
     }
 

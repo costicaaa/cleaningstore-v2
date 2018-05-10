@@ -1,14 +1,29 @@
 package app.receipt;
 
 
- // All fields are private and final. Getters (but not setters) are generated (https://projectlombok.org/features/Value.html)
+import app.item.Item;
+
+import java.util.List;
+
+// All fields are private and final. Getters (but not setters) are generated (https://projectlombok.org/features/Value.html)
 public class Receipt {
     int id;
     String customer_name;
     String customer_email;
     double price;
-     java.util.Date entry_date;
-     java.util.Date return_date;
+    java.util.Date entry_date;
+    java.util.Date return_date;
+    List<Item> assignedItems;
+
+
+    public List<Item> getAssignedItems() {
+        return assignedItems;
+    }
+
+    public void setAssignedItems(List<Item> assignedItems) {
+        this.assignedItems = assignedItems;
+    }
+
 
      public int getId() {
          return id;
@@ -57,4 +72,5 @@ public class Receipt {
      public void setReturn_date(java.util.Date return_date) {
          this.return_date = return_date;
      }
+
  }

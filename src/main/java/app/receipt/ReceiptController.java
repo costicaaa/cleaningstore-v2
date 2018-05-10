@@ -1,22 +1,50 @@
 package app.receipt;
 
+import app.book.Book;
 import app.login.*;
 import app.util.*;
 import app.receipt.*;
 import spark.*;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static app.Application.*;
 import static app.util.JsonUtil.*;
 import static app.util.RequestUtil.*;
+import app.item.*;
 
 public class ReceiptController {
 
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("users", userDao.getAllUserNames());
-        model.put("book", bookDao.getRandomBook());
+        List<Receipt> receipts = receiptDao.getAllReceipts();
+        for(Receipt r : receipts)
+        {
+            Date tempD = r.getEntry_date();
+
+            SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(mdyFormat.format(tempD));
+//            System.out.println(tempD.);
+        }
+        model.put("receipts", receipts);
+
         return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+    };
+
+    public static Route serveViewPage = (Request request, Response response) -> {
+
+        HashMap<String, Object> model = new HashMap<>();
+//        Book book = bookDao.getBookByIsbn(getParamId(request));
+        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
+        for(Item i : receipt.assignedItems)
+        {
+            System.out.println(i.getId());
+            System.out.println(i.service.getName());
+        }
+        model.put("receipt", receipt);
+        return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
+
     };
 
     public static Route serveAddPage = (Request request, Response response) -> {
@@ -40,7 +68,6 @@ public class ReceiptController {
         {
             app.service.Service temp = serviceDao.getServiceById(Integer.parseInt(s));
             total += temp.getPrice();
-            System.out.println(temp.getName() + "----" + temp.getPrice());
         }
         //end
 
@@ -49,9 +76,17 @@ public class ReceiptController {
         new_receipt.customer_email = email;
         new_receipt.price = total;
         new_receipt.entry_date = date;
+        receiptDao.store(new_receipt);
+        System.out.println("new receipt id ==== " + new_receipt.getId());
 
-        receiptDao.storeReceipt(new_receipt);
-        System.out.println("worked");
+        for(String s : services)
+        {
+            Item tempItem = new Item();
+            tempItem.setReceipt_id(new_receipt.getId());
+            tempItem.setService_id(Integer.parseInt(s));
+            itemDao.store(tempItem);
+
+        }
 
 
 
