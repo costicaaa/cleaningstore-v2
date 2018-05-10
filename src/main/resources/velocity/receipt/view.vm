@@ -1,0 +1,55 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Receipt #$receipt.getId()</h2>
+        </div>
+    </div>
+
+    <section class="margin-bottom-sm">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-lg-12">
+                    <div class="stats-with-chart-1 block">
+                        <p>Customer name : $receipt.getCustomer_name()</p>
+                        <p>Customer name : $receipt.getCustomer_email()</p>
+                        <p>Customer name : $receipt.getPrice()</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <tbody>
+                                        #foreach($item in $receipt.assignedItems)
+                                        <tr>
+                                            <td>$item.getId()</td>
+                                            <td>$item.service.getName()</td>
+                                            <td>$item.service.getPrice()</td>
+                                            <td>$item.getStatus()</td>
+                                            <td>
+                                                #if($item.getCleaning_date())
+                                                    $Utils.formatDate($item.getCleaning_date())
+                                                #end
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-dark" href="#">Mark cleaned</a>
+                                            </td>
+                                        </tr>
+                                        #end
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+<script>
+</script>
+
+#end

@@ -4,6 +4,7 @@ import lombok.*;
 import app.service.*;
 
 import java.util.Date;
+import java.util.List;
 
 // All fields are private and final. Getters (but not setters) are generated (https://projectlombok.org/features/Value.html)
 public class Item {
@@ -12,9 +13,16 @@ public class Item {
     public java.util.Date cleaning_date;
     public int receipt_id;
     public int service_id;
+    public Service service;
 
-//    Service service;
 
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 
     public int getService_id() {
         return service_id;

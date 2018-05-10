@@ -49,21 +49,22 @@ public class Application {
         enableDebugScreen();
 
         // Set up before-filters (called before each get/post)
-        before("*",                  Filters.addTrailingSlashes);
-        before("*",                  Filters.handleLocaleChange);
+        before("*",                       Filters.addTrailingSlashes);
+        before("*",                       Filters.handleLocaleChange);
 
         // Set up routes
-        get(Path.Web.INDEX,          IndexController.serveIndexPage);
-        get(Path.Web.BOOKS,          BookController.fetchAllBooks);
-        get(Path.Web.ONE_BOOK,       BookController.fetchOneBook);
-        get(Path.Web.LOGIN,          LoginController.serveLoginPage);
-        post(Path.Web.LOGIN,         LoginController.handleLoginPost);
-        post(Path.Web.LOGOUT,        LoginController.handleLogoutPost);
+        get(    Path.Web.INDEX,                 IndexController.serveIndexPage);
+        get(    Path.Web.BOOKS,                 BookController.fetchAllBooks);
+        get(    Path.Web.ONE_BOOK,              BookController.fetchOneBook);
+        get(    Path.Web.LOGIN,                 LoginController.serveLoginPage);
+        post(   Path.Web.LOGIN,                 LoginController.handleLoginPost);
+        post(   Path.Web.LOGOUT,                LoginController.handleLogoutPost);
 
 
-        get(  Path.Web.RECEIPTS,        ReceiptController.serveIndexPage);
-        get(  Path.Web.RECEIPTS_ADD,        ReceiptController.serveAddPage);
-        post( Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
+        get(    Path.Web.RECEIPTS,              ReceiptController.serveIndexPage);
+        get(    Path.Web.RECEIPTS_VIEW,         ReceiptController.serveViewPage);
+        get(    Path.Web.RECEIPTS_ADD,          ReceiptController.serveAddPage);
+        post(   Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
 
 
         get("*",                     ViewUtil.notFound);

@@ -1,5 +1,6 @@
 package app.receipt;
 
+import app.book.Book;
 import app.login.*;
 import app.util.*;
 import app.receipt.*;
@@ -29,6 +30,21 @@ public class ReceiptController {
         model.put("receipts", receipts);
 
         return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+    };
+
+    public static Route serveViewPage = (Request request, Response response) -> {
+
+        HashMap<String, Object> model = new HashMap<>();
+//        Book book = bookDao.getBookByIsbn(getParamId(request));
+        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
+        for(Item i : receipt.assignedItems)
+        {
+            System.out.println(i.getId());
+            System.out.println(i.service.getName());
+        }
+        model.put("receipt", receipt);
+        return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
+
     };
 
     public static Route serveAddPage = (Request request, Response response) -> {
