@@ -15,6 +15,7 @@ public class ViewUtil {
     public static String render(Request request, Map<String, Object> model, String templatePath) {
         model.put("msg", new MessageBundle(getSessionLocale(request)));
         model.put("currentUser", getSessionCurrentUser(request));
+        model.put("currentUserRole", getSessionCurrentUserRole(request));
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
 
         // C : added this so we can make w/e we want in views :D

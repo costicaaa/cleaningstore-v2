@@ -1,5 +1,6 @@
 package app.user;
 
+import app.util.Misc;
 import org.mindrot.jbcrypt.*;
 import static app.Application.userDao;
 
@@ -11,19 +12,18 @@ public class UserController {
         if (username.isEmpty() || password.isEmpty()) {
             return false;
         }
-        User user = userDao.getUserByUsername(username);
+        User user = userDao.getUserByEmail(username);
         if (user == null) {
             return false;
         }
-        String hashedPassword = BCrypt.hashpw(password, user.getSalt());
-        return hashedPassword.equals(user.getHashedPassword());
+        String hashedPassword = Misc.hashPW(password);
+        return hashedPassword.equals(user.getPassword());
     }
 
     // This method doesn't do anything, it's just included as an example
     public static void setPassword(String username, String oldPassword, String newPassword) {
         if (authenticate(username, oldPassword)) {
-            String newSalt = BCrypt.gensalt();
-            String newHashedPassword = BCrypt.hashpw(newSalt, newPassword);
+            String newHashedPassword = BCrypt.hashpw(Misc.salt, newPassword);
             // Update the user salt and password
         }
     }

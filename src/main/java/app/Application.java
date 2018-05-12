@@ -16,6 +16,7 @@ import static spark.debug.DebugScreen.*;
 import app.util.HibernateUtility;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -31,6 +32,9 @@ public class Application {
 
 
     public static void main(String[] args) {
+//        User uu = new User();
+//        uu.setPassword("asd123");
+
 
         SessionFactory sessionFactory = HibernateUtility.getSessionFactory();
 
