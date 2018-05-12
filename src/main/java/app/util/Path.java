@@ -7,6 +7,8 @@ public class Path {
     // The @Getter methods are needed in order to access
     // the variables from Velocity Templates
     public static class Web {
+        private static String helperID = ":id/";
+
         @Getter public static final String INDEX = "/index/";
         @Getter public static final String LOGIN = "/login/";
         @Getter public static final String LOGOUT = "/logout/";
@@ -14,11 +16,13 @@ public class Path {
         @Getter public static final String ONE_BOOK = "/books/:isbn/";
 
         @Getter public static final String RECEIPTS = "/receipts/";
-        @Getter public static final String RECEIPTS_VIEW = "/receipts/:id/";
+        @Getter public static final String RECEIPTS_VIEW = RECEIPTS + helperID;
         @Getter public static final String RECEIPTS_ADD = "/receipts/add/";
         @Getter public static final String RECEIPTS_STORE = "/receipts/store/";
         @Getter public static final String RECEIPTS_CLEAN_ITEM_PATH = "/receipts/clean-item/";
-        @Getter public static final String RECEIPTS_CLEAN_ITEM = RECEIPTS_CLEAN_ITEM_PATH + ":id/";
+        @Getter public static final String RECEIPTS_CLEAN_ITEM = RECEIPTS_CLEAN_ITEM_PATH + helperID;
+        @Getter public static final String RECEIPTS_RETURN_PATH = "/receipts/return/";
+        @Getter public static final String RECEIPTS_RETURN = RECEIPTS_RETURN_PATH + helperID;
 
     }
 

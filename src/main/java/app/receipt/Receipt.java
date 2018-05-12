@@ -14,6 +14,7 @@ public class Receipt {
     java.util.Date entry_date;
     java.util.Date return_date;
     List<Item> assignedItems;
+    boolean allItemsClean = false;
 
 
     public List<Item> getAssignedItems() {
@@ -71,6 +72,21 @@ public class Receipt {
 
      public void setReturn_date(java.util.Date return_date) {
          this.return_date = return_date;
+     }
+
+     public boolean checkIfAllItemsClean()
+     {
+         boolean truth = true;
+         for(Item i : assignedItems)
+         {
+             if(i.getStatus() == 0)
+             {
+                 truth = false;
+                 break;
+             }
+         }
+         this.allItemsClean = truth;
+         return truth;
      }
 
  }

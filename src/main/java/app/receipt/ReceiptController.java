@@ -36,7 +36,29 @@ public class ReceiptController {
 
     public static Route cleanItem = (Request request, Response response) -> {
         Item item = itemDao.updateCleanStatus(getParamId(request));
+
+//        Receipt receipt = receiptDao.getReceiptById(item.getReceipt_id());
+//        if(receipt.checkIfAllItemsClean() == true)
+//        {
+////            receiptDao.set
+//        }
+
         response.redirect(Path.Web.RECEIPTS + item.getReceipt_id() + "/");
+        return null;
+    };
+
+    public static Route returnReceipt = (Request request, Response response) -> {
+        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
+        //todo :: messages
+        if(receipt.checkIfAllItemsClean())
+        {
+            receiptDao.returnReceipt(receipt);
+        }
+        else
+        {
+            System.out.println("THIAAS SHOULD NEVER HAPPEN, THROW SOME FCKIN ERROR");
+        }
+        response.redirect(Path.Web.RECEIPTS + receipt.getId() + "/");
         return null;
     };
 

@@ -4,8 +4,10 @@ import app.item.Item;
 import app.service.Service;
 import app.util.HibernateUtility;
 import com.google.common.collect.*;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import javax.persistence.Entity;
 import app.service.ServiceDao;
@@ -60,6 +62,30 @@ public class ReceiptDao extends HibernateUtility{
     public void store(Receipt receipt)
     {
         getSessionFactory().openSession().save(receipt);
+    }
+
+    public Receipt returnReceipt(Receipt receipt) // we return item so we can redirect back to the receipt view page :D
+    {
+
+        Session session = getSessionFactory().openSession();
+        Transaction tx = null;
+
+        java.util.Date dt = new java.util.Date();
+
+        //todo :: redirect messages
+        try{
+            tx = session.beginTransaction();
+
+            receipt.setReturn_date(dt);
+            session.update(receipt);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return receipt;
     }
 
 }

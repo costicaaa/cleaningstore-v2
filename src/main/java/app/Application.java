@@ -63,6 +63,7 @@ public class Application {
 
         get(    Path.Web.RECEIPTS,              ReceiptController.serveIndexPage);
         get(    Path.Web.RECEIPTS_ADD,          ReceiptController.serveAddPage);
+        get(    Path.Web.RECEIPTS_RETURN,       ReceiptController.returnReceipt);
         get(    Path.Web.RECEIPTS_VIEW,         ReceiptController.serveViewPage);
         post(   Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
         get(    Path.Web.RECEIPTS_CLEAN_ITEM,   ReceiptController.cleanItem);
