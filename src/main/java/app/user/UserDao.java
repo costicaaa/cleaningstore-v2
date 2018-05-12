@@ -5,6 +5,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import spark.ExceptionHandler;
 
 import java.util.*;
 
@@ -20,10 +21,17 @@ public class UserDao extends HibernateUtility
         return results;
     }
 
-    public User save(User user)
+    public User save(User user) throws Exception
     {
-        getSessionFactory().openSession().save(user);
-        return user;
+        try
+        {
+            getSessionFactory().openSession().save(user);
+            return user;
+        }
+        catch(Exception e)
+        {
+            throw new Exception();
+        }
     }
 
     public User update(User user)

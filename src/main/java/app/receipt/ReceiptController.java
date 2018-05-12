@@ -35,31 +35,46 @@ public class ReceiptController {
     };
 
     public static Route cleanItem = (Request request, Response response) -> {
-        Item item = itemDao.updateCleanStatus(getParamId(request));
+        HashMap<String, Object> model = new HashMap<>();
 
-//        Receipt receipt = receiptDao.getReceiptById(item.getReceipt_id());
-//        if(receipt.checkIfAllItemsClean() == true)
-//        {
-////            receiptDao.set
-//        }
+        try
+        {
+            Item item = itemDao.updateCleanStatus(getParamId(request));
+            Receipt receipt = receiptDao.getReceiptById( item.getReceipt_id());
+            model.put("receipt", receipt);
+            model.put("showMessage", true);
+            model.put("message", "Item status updated!");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
+        }
+        catch(Exception e)
+        {
+            model.put("receipts", receiptDao.getAllReceipts());
+            model.put("showMessage", true);
+            model.put("message", "Something went terribly wrong, or you are trying to do nasty stuff!");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+        }
 
-        response.redirect(Path.Web.RECEIPTS + item.getReceipt_id() + "/");
-        return null;
     };
 
     public static Route returnReceipt = (Request request, Response response) -> {
+        HashMap<String, Object> model = new HashMap<>();
+
         Receipt receipt = receiptDao.getReceiptById(getParamId(request));
-        //todo :: messages
         if(receipt.checkIfAllItemsClean())
         {
-            receiptDao.returnReceipt(receipt);
+            model.put("receipts", receiptDao.getAllReceipts());
+            model.put("showMessage", true);
+            model.put("message", "Status updated");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS);
         }
         else
         {
             System.out.println("THIAAS SHOULD NEVER HAPPEN, THROW SOME FCKIN ERROR");
+            model.put("receipts", receiptDao.getAllReceipts());
+            model.put("showMessage", true);
+            model.put("message", "Something went terribly wrong, or you are trying to do nasty stuff!");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS);
         }
-        response.redirect(Path.Web.RECEIPTS + receipt.getId() + "/");
-        return null;
     };
 
     public static Route serveAddPage = (Request request, Response response) -> {

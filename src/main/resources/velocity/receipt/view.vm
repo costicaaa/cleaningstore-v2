@@ -12,63 +12,67 @@
         <div class="container-fluid">
             <div class="row d-flex align-items-stretch">
                 <div class="col-lg-12">
-                    <div id="viewReceipt" class="stats-with-chart-1 block">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>Customer name : $receipt.getCustomer_name()</p>
-                                <p>Customer email : $receipt.getCustomer_email()</p>
-                                <p>Customer name : $receipt.getPrice()</p>
-                            </div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3">
-                                #if($receipt.checkIfAllItemsClean())
-                                    #if($receipt.getReturn_date())
+                    #if($receipt)
+                        <div id="viewReceipt" class="stats-with-chart-1 block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Customer name : $receipt.getCustomer_name()</p>
+                                    <p>Customer email : $receipt.getCustomer_email()</p>
+                                    <p>Customer name : $receipt.getPrice()</p>
+                                </div>
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    #if($receipt.checkIfAllItemsClean())
+                                        #if($receipt.getReturn_date())
                                             <p>Items returned to customer.</p>
-                                    #else
+                                        #else
                                             <a href="$WebPath.getRECEIPTS_RETURN_PATH()$receipt.getId()" class="btn btn-warning">Return items</a>
+                                        #end
+
                                     #end
-
-                                #end
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table">
-                                    <tbody>
-                                        #foreach($item in $receipt.assignedItems)
-                                        <tr>
-                                            <td>$item.getId()</td>
-                                            <td>$item.service.getName()</td>
-                                            <td>$item.service.getPrice()</td>
-                                            <td>
-                                                #if($item.getStatus() == $Utils.getSTATUS_ITEM_DIRTY())
-                                                    Dirty
-                                                #else
-                                                    Clean
-                                                #end
-                                            </td>
-                                            <td>
-                                                #if($item.getCleaning_date())
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <tbody>
+                                            #foreach($item in $receipt.assignedItems)
+                                            <tr>
+                                                <td>$item.getId()</td>
+                                                <td>$item.service.getName()</td>
+                                                <td>$item.service.getPrice()</td>
+                                                <td>
+                                                    #if($item.getStatus() == $Utils.getSTATUS_ITEM_DIRTY())
+                                                        Dirty
+                                                    #else
+                                                        Clean
+                                                    #end
+                                                </td>
+                                                <td>
+                                                    #if($item.getCleaning_date())
                                                     $Utils.formatDate($item.getCleaning_date())
                                                 #end
-                                            </td>
-                                            <td>
-                                                #if($item.getStatus() == $Utils.getSTATUS_ITEM_DIRTY())
-                                                <a class="btn btn-dark"
-                                                   href="$WebPath.getRECEIPTS_CLEAN_ITEM_PATH()$item.getId()"
-                                                    >Clean!
-                                                </a>
-                                                #end
+                                                </td>
+                                                <td>
+                                                    #if($item.getStatus() == $Utils.getSTATUS_ITEM_DIRTY())
+                                                        <a class="btn btn-dark"
+                                                           href="$WebPath.getRECEIPTS_CLEAN_ITEM_PATH()$item.getId()"
+                                                        >Clean!
+                                                        </a>
+                                                    #end
 
-                                            </td>
-                                        </tr>
-                                        #end
-                                    </tbody>
-                                </table>
+                                                </td>
+                                            </tr>
+                                            #end
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    #else
+                        <p>Receipt not founnd</p>
+                    #end
                 </div>
             </div>
         </div>

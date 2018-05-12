@@ -24,7 +24,7 @@ public class ItemDao extends HibernateUtility{
         return item;
     }
 
-    public Item updateCleanStatus(int id) // we return item so we can redirect back to the receipt view page :D
+    public Item updateCleanStatus(int id) throws Exception // we return item so we can redirect back to the receipt view page :D
     {
 
         Session session = getSessionFactory().openSession();

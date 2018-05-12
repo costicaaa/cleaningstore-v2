@@ -4,6 +4,7 @@ import app.util.Misc;
 import app.util.Path;
 import app.util.ViewUtil;
 import org.mindrot.jbcrypt.*;
+import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -42,6 +43,7 @@ public class UserController {
 
     public static Route saveUser = (Request request, Response response) -> {
         //request params
+        Map<String, Object> model = new HashMap<>();
         String name = request.queryParams("name");
         String email = request.queryParams("email");
         String password = request.queryParams("password");
@@ -53,18 +55,28 @@ public class UserController {
         user.setPassword(Misc.hashPW(password));
         user.setRole(Integer.parseInt(role));
 
-        if(request.queryParams("password") == "yes")
+        if(request.queryParams("update") == "yes")
         {
             userDao.update(user);
         }
         else
         {
-            userDao.save(user);
+            try
+            {
+                userDao.save(user);
+                model.put("user", user);
+                model.put("showMessage", true);
+                model.put("message", "User saved!");
+                return ViewUtil.render(request, model, Path.Template.USERS_VIEW);
+            }
+            catch (Exception e)
+            {
+                model.put("user", user);
+                model.put("showMessage", true);
+                model.put("message", "User could not be saved, email already exists!");
+                return ViewUtil.render(request, model, Path.Template.USERS_ADD);
+            }
         }
-        //todo:: message
-
-        Map<String, Object> model = new HashMap<>();
-        response.redirect(Path.Web.USERS);
         return null;
     };
 
