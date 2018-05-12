@@ -17,6 +17,8 @@ public class Path {
         @Getter public static final String RECEIPTS_VIEW = "/receipts/:id/";
         @Getter public static final String RECEIPTS_ADD = "/receipts/add/";
         @Getter public static final String RECEIPTS_STORE = "/receipts/store/";
+        @Getter public static final String RECEIPTS_CLEAN_ITEM_PATH = "/receipts/clean-item/";
+        @Getter public static final String RECEIPTS_CLEAN_ITEM = RECEIPTS_CLEAN_ITEM_PATH + ":id/";
 
     }
 

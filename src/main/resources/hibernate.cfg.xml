@@ -27,6 +27,7 @@
         </property>
 
         <property name="connection.autocommit">true</property>
+        <!--<property name="hibernate.flushMode">ALWAYS</property>-->
 
         <!-- List of XML mapping files -->
         <!--<mapping resource = "User.hbm.xml"/>-->

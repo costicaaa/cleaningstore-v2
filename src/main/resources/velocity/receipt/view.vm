@@ -12,9 +12,9 @@
         <div class="container-fluid">
             <div class="row d-flex align-items-stretch">
                 <div class="col-lg-12">
-                    <div class="stats-with-chart-1 block">
+                    <div id="viewReceipt" class="stats-with-chart-1 block">
                         <p>Customer name : $receipt.getCustomer_name()</p>
-                        <p>Customer name : $receipt.getCustomer_email()</p>
+                        <p>Customer email : $receipt.getCustomer_email()</p>
                         <p>Customer name : $receipt.getPrice()</p>
                         <div class="row">
                             <div class="col-md-12">
@@ -32,7 +32,7 @@
                                                 #end
                                             </td>
                                             <td>
-                                                <a class="btn btn-dark" href="#">Mark cleaned</a>
+                                                <a class="btn btn-dark" href="$WebPath.getRECEIPTS_CLEAN_ITEM_PATH()$item.getId()">Mark cleaned</a>
                                             </td>
                                         </tr>
                                         #end
@@ -50,6 +50,7 @@
 </div>
 
 <script>
+
 </script>
 
 #end

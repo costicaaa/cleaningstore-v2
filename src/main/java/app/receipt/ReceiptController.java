@@ -18,33 +18,26 @@ public class ReceiptController {
 
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        List<Receipt> receipts = receiptDao.getAllReceipts();
-        for(Receipt r : receipts)
-        {
-            Date tempD = r.getEntry_date();
 
-            SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
-            System.out.println(mdyFormat.format(tempD));
-//            System.out.println(tempD.);
-        }
+        List<Receipt> receipts = receiptDao.getAllReceipts();
         model.put("receipts", receipts);
 
         return ViewUtil.render(request, model, Path.Template.RECEIPTS);
     };
 
     public static Route serveViewPage = (Request request, Response response) -> {
-
         HashMap<String, Object> model = new HashMap<>();
-//        Book book = bookDao.getBookByIsbn(getParamId(request));
-        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
-        for(Item i : receipt.assignedItems)
-        {
-            System.out.println(i.getId());
-            System.out.println(i.service.getName());
-        }
-        model.put("receipt", receipt);
-        return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
 
+        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
+        model.put("receipt", receipt);
+
+        return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
+    };
+
+    public static Route cleanItem = (Request request, Response response) -> {
+        Item item = itemDao.updateCleanStatus(getParamId(request));
+        response.redirect(Path.Web.RECEIPTS + item.getReceipt_id() + "/");
+        return null;
     };
 
     public static Route serveAddPage = (Request request, Response response) -> {
@@ -85,12 +78,7 @@ public class ReceiptController {
             tempItem.setReceipt_id(new_receipt.getId());
             tempItem.setService_id(Integer.parseInt(s));
             itemDao.store(tempItem);
-
         }
-
-
-
-
         Map<String, Object> model = new HashMap<>();
         model.put("services", serviceDao.getAllServices());
 
