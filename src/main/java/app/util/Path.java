@@ -24,6 +24,15 @@ public class Path {
         @Getter public static final String RECEIPTS_RETURN_PATH = "/receipts/return/";
         @Getter public static final String RECEIPTS_RETURN = RECEIPTS_RETURN_PATH + helperID;
 
+
+
+        @Getter public static final String USERS = "/users/";
+        @Getter public static final String USERS_ADD = "/users/add/";
+        @Getter public static final String USERS_VIEW = USERS + helperID;
+        @Getter public static final String USERS_SAVE = "/users/save/";
+
+
+
     }
 
     public static class Template {
@@ -36,6 +45,10 @@ public class Path {
         public static final String RECEIPTS = "/velocity/receipt/all.vm";
         public static final String RECEIPTS_VIEW = "/velocity/receipt/view.vm";
         public static final String RECEIPTS_ADD = "/velocity/receipt/add.vm";
+
+        public static final String USERS = "/velocity/user/all.vm";
+        public static final String USERS_VIEW = "/velocity/user/view.vm";
+        public static final String USERS_ADD = "/velocity/user/add.vm";
     }
 
 }

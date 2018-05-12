@@ -10,13 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static app.util.JsonUtil.dataToJson;
-
+import lombok.*;
 public class Misc {
 
-    public static Integer STATUS_ITEM_DIRTY = 0;
-    public static Integer USER_ROLE_ADMIN = 1;
-    public static Integer USER_ROLE_EMPLOYEE = 2;
-    public static String  salt  = "$2y$10$9LIvdTW1CO8Nxy9Zc8l.eOaGI1hGFbW63u.CBYorwvrJQtVTEazzy";
+    @Getter public static final  Integer STATUS_ITEM_DIRTY = 0;
+    @Getter public static final  Integer USER_ROLE_ADMIN = 1;
+    @Getter public static final  Integer USER_ROLE_EMPLOYEE = 2;
 
     public static String formatDate(Date date)
     {

@@ -110,10 +110,10 @@
             <div class="avatar"><img src="/dark-theme/img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
             <div class="title">
                 <h1 class="h5">
-                    $currentUser
+##                    $currentUser
                 </h1>
-##                todo :: see WHY DA FUCK $Utils.{property} is not available here
-##                    #if($currentUserRole == 1)
+##                todo :: see WHY DA FUCK $Utils.{property} is not available here ||| SOLVED FUCKING LOMBOK SHIT
+##                    #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
                         <p>Admin</p>
 ##                    #else
                         <p>Employee</p>
@@ -130,7 +130,7 @@
                     <li><a href="#">Search</a></li>
                 </ul>
             </li>
-##        #if($currentUserRole == 1)
+##        #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
             <li><a href="#"> <i class="icon-user"></i>Users </a></li>
             <li><a href="#"> <i class="icon-pie-chart"></i>Reports </a></li>
 ##        #end

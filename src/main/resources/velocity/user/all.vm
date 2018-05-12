@@ -1,0 +1,78 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <h2 class="h5 no-margin-bottom">Users</h2>
+
+                </div>
+                <div class="col-md-8"></div>
+                <div class="col-md-2">
+                    <a href="$WebPath.getUSERS_ADD()" class="btn btn-dark">Add new user</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="block">
+            <table id="usersTable" class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($user in $users)
+                    <tr>
+                        <td>$user.getId()</td>
+                        <td>$user.getName()</td>
+                        <td>$user.getEmail()</td>
+
+                        <td>
+                            #if($user.getRole() == $Utils.getUSER_ROLE_ADMIN())
+                                <label class="label label-info">
+                                    Admin
+                                </label>
+                            #else
+                                <label class="label label-default">
+                                    Employee
+                                </label>
+                            #end
+                        </td>
+                        <td>
+                            <a class="btn btn-dark" href="$WebPath.getUSERS()$user.getId()">View</a>
+                        </td>
+                    </tr>
+
+                    #end
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#usersTable').DataTable({
+            "lengthMenu": [500, 300, 200, 100, 75, 50, 25, 10],
+            "pageLength": 500,
+        });
+    });
+</script>
+
+#end

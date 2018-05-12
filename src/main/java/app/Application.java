@@ -72,6 +72,12 @@ public class Application {
         get(    Path.Web.RECEIPTS_CLEAN_ITEM,   ReceiptController.cleanItem);
 
 
+        get(    Path.Web.USERS,                 UserController.serveIndexPage);
+        get(    Path.Web.USERS_ADD,             UserController.serveAddPage);
+        get(    Path.Web.USERS_VIEW,            UserController.serveViewPage);
+        post(   Path.Web.USERS_SAVE,            UserController.saveUser);
+
+
         get("*",                     ViewUtil.notFound);
 
         //Set up after-filters (called after each get/post)

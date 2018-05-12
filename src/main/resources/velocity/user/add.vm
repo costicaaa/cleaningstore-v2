@@ -1,0 +1,62 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Users</h2>
+        </div>
+    </div>
+
+    <section class="margin-bottom-sm">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-lg-12">
+                    <div class="stats-with-chart-1 block">
+                        <div class="title"><strong class="d-block">Add new</strong>
+                        </div>
+                        <form method="POST" action="$WebPath.getUSERS_SAVE()">
+                            <input type="hidden" value="no" name="update">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input name="name" type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input name="email" type="email" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input name="password" type="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Role
+                                        </label>
+                                        <select name="role" class="form-control select-dark-theme">
+                                            <option value="1">Admin</option>
+                                            <option value="2">Employee</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="btn btn-dark" type="submit" value="Save">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+<script>
+
+</script>
+
+#end
