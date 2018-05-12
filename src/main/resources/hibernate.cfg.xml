@@ -27,11 +27,13 @@
         </property>
 
         <property name="connection.autocommit">true</property>
+        <!--<property name="hibernate.flushMode">ALWAYS</property>-->
 
         <!-- List of XML mapping files -->
-        <!--<mapping resource = "User.hbm.xml"/>-->
+        <mapping resource = "User.hbm.xml"/>
         <mapping resource = "Service.hbm.xml"/>
         <mapping resource = "Receipt.hbm.xml"/>
+        <mapping resource = "Item.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

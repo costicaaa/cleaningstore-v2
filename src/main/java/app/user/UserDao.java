@@ -1,24 +1,73 @@
 package app.user;
 
-import com.google.common.collect.*;
+import app.util.HibernateUtility;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import spark.ExceptionHandler;
+
 import java.util.*;
-import java.util.stream.*;
 
-public class UserDao {
+public class UserDao extends HibernateUtility
+{
+    public List<User> getAllUsers()
+    {
+        String hql = "FROM app.user.User order by id desc";
+        Session session = getSessionFactory().openSession();
+        Query query = session.createQuery(hql);
+        List<User> results = query.list();
 
-    private final List<User> users = ImmutableList.of(
-            //        Username    Salt for hash                    Hashed password (the password is "password" for all users)
-            new User("admin", "$2a$10$h.dl5J86rGH7I8bD9bZeZe", "$2a$10$h.dl5J86rGH7I8bD9bZeZeci0pDt0.VwFTGujlnEaZXPf/q7vM5wO"),
-            new User("davidase",  "$2a$10$e0MYzXyjpJS7Pd0RVvHwHe", "$2a$10$e0MYzXyjpJS7Pd0RVvHwHe1HlCS4bZJ18JuywdEMLT83E1KDmUhCy"),
-            new User("federico",  "$2a$10$E3DgchtVry3qlYlzJCsyxe", "$2a$10$E3DgchtVry3qlYlzJCsyxeSK0fftK4v0ynetVCuDdxGVl1obL.ln2")
-    );
-
-    public User getUserByUsername(String username) {
-        return users.stream().filter(b -> b.getUsername().equals(username)).findFirst().orElse(null);
+        return results;
     }
 
-    public Iterable<String> getAllUserNames() {
-        return users.stream().map(User::getUsername).collect(Collectors.toList());
+    public User save(User user) throws Exception
+    {
+        try
+        {
+            getSessionFactory().openSession().save(user);
+            return user;
+        }
+        catch(Exception e)
+        {
+            throw new Exception();
+        }
+    }
+
+    public User update(User user)
+    {
+        Session session = getSessionFactory().openSession();
+        Transaction tx = null;
+        java.util.Date dt = new java.util.Date();
+        //todo :: redirect messages
+        try{
+            tx = session.beginTransaction();
+            session.update(user);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+        return user;
+    }
+
+    public User getUserByEmail(String email)
+    {
+        Session session = getSessionFactory().openSession();
+        String hql = "FROM app.user.User where email = :email";
+        return (User) session.createQuery(hql)
+                        .setParameter("email", email)
+                        .uniqueResult();
+    }
+
+    public User getUserById(int id)
+    {
+        Session session = getSessionFactory().openSession();
+        User user =  (User) session.get(User.class, id);
+
+        return user;
     }
 
 }

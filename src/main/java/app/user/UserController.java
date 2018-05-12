@@ -1,7 +1,21 @@
 package app.user;
 
+import app.util.Misc;
+import app.util.Path;
+import app.util.ViewUtil;
 import org.mindrot.jbcrypt.*;
-import static app.Application.userDao;
+import spark.ExceptionHandler;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static app.Application.*;
+import static app.Application.serviceDao;
+import static app.util.RequestUtil.getParamId;
 
 public class UserController {
 
@@ -11,20 +25,84 @@ public class UserController {
         if (username.isEmpty() || password.isEmpty()) {
             return false;
         }
-        User user = userDao.getUserByUsername(username);
+        User user = userDao.getUserByEmail(username);
         if (user == null) {
             return false;
         }
-        String hashedPassword = BCrypt.hashpw(password, user.getSalt());
-        return hashedPassword.equals(user.getHashedPassword());
+        String hashedPassword = Misc.hashPW(password);
+        return hashedPassword.equals(user.getPassword());
     }
 
     // This method doesn't do anything, it's just included as an example
     public static void setPassword(String username, String oldPassword, String newPassword) {
         if (authenticate(username, oldPassword)) {
-            String newSalt = BCrypt.gensalt();
-            String newHashedPassword = BCrypt.hashpw(newSalt, newPassword);
+//            String newHashedPassword = BCrypt.hashpw(Misc.salt, newPassword);
             // Update the user salt and password
         }
     }
+
+    public static Route saveUser = (Request request, Response response) -> {
+        //request params
+        Map<String, Object> model = new HashMap<>();
+        String name = request.queryParams("name");
+        String email = request.queryParams("email");
+        String password = request.queryParams("password");
+        String role = request.queryParams("role");
+
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(Misc.hashPW(password));
+        user.setRole(Integer.parseInt(role));
+
+        if(request.queryParams("update") == "yes")
+        {
+            userDao.update(user);
+        }
+        else
+        {
+            try
+            {
+                userDao.save(user);
+                model.put("user", user);
+                model.put("showMessage", true);
+                model.put("message", "User saved!");
+                return ViewUtil.render(request, model, Path.Template.USERS_VIEW);
+            }
+            catch (Exception e)
+            {
+                model.put("user", user);
+                model.put("showMessage", true);
+                model.put("message", "User could not be saved, email already exists!");
+                return ViewUtil.render(request, model, Path.Template.USERS_ADD);
+            }
+        }
+        return null;
+    };
+
+    public static Route serveIndexPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+
+        List<User> users = userDao.getAllUsers();
+        model.put("users", users);
+
+        return ViewUtil.render(request, model, Path.Template.USERS);
+    };
+
+    public static Route serveViewPage = (Request request, Response response) -> {
+        HashMap<String, Object> model = new HashMap<>();
+
+        User user = userDao.getUserById(getParamId(request));
+        model.put("user", user);
+
+        return ViewUtil.render(request, model, Path.Template.USERS_VIEW);
+    };
+
+
+    public static Route serveAddPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("services", serviceDao.getAllServices());
+
+        return ViewUtil.render(request, model, Path.Template.USERS_ADD);
+    };
 }

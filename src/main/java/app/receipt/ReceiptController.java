@@ -1,22 +1,80 @@
 package app.receipt;
 
+import app.book.Book;
 import app.login.*;
 import app.util.*;
 import app.receipt.*;
 import spark.*;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static app.Application.*;
 import static app.util.JsonUtil.*;
 import static app.util.RequestUtil.*;
+import app.item.*;
 
 public class ReceiptController {
 
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("users", userDao.getAllUserNames());
-        model.put("book", bookDao.getRandomBook());
+
+        List<Receipt> receipts = receiptDao.getAllReceipts();
+        model.put("receipts", receipts);
+
         return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+    };
+
+    public static Route serveViewPage = (Request request, Response response) -> {
+        HashMap<String, Object> model = new HashMap<>();
+
+        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
+        model.put("receipt", receipt);
+
+        return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
+    };
+
+    public static Route cleanItem = (Request request, Response response) -> {
+        HashMap<String, Object> model = new HashMap<>();
+
+        try
+        {
+            Item item = itemDao.updateCleanStatus(getParamId(request));
+            Receipt receipt = receiptDao.getReceiptById( item.getReceipt_id());
+            model.put("receipt", receipt);
+            model.put("showMessage", true);
+            model.put("message", "Item status updated!");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS_VIEW);
+        }
+        catch(Exception e)
+        {
+            model.put("receipts", receiptDao.getAllReceipts());
+            model.put("showMessage", true);
+            model.put("message", "Something went terribly wrong, or you are trying to do nasty stuff!");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+        }
+
+    };
+
+    public static Route returnReceipt = (Request request, Response response) -> {
+        HashMap<String, Object> model = new HashMap<>();
+
+        Receipt receipt = receiptDao.getReceiptById(getParamId(request));
+        if(receipt.checkIfAllItemsClean())
+        {
+            model.put("receipts", receiptDao.getAllReceipts());
+            model.put("showMessage", true);
+            model.put("message", "Status updated");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+        }
+        else
+        {
+            System.out.println("THIAAS SHOULD NEVER HAPPEN, THROW SOME FCKIN ERROR");
+            model.put("receipts", receiptDao.getAllReceipts());
+            model.put("showMessage", true);
+            model.put("message", "Something went terribly wrong, or you are trying to do nasty stuff!");
+            return ViewUtil.render(request, model, Path.Template.RECEIPTS);
+        }
     };
 
     public static Route serveAddPage = (Request request, Response response) -> {
@@ -40,7 +98,6 @@ public class ReceiptController {
         {
             app.service.Service temp = serviceDao.getServiceById(Integer.parseInt(s));
             total += temp.getPrice();
-            System.out.println(temp.getName() + "----" + temp.getPrice());
         }
         //end
 
@@ -49,13 +106,16 @@ public class ReceiptController {
         new_receipt.customer_email = email;
         new_receipt.price = total;
         new_receipt.entry_date = date;
+        receiptDao.store(new_receipt);
+        System.out.println("new receipt id ==== " + new_receipt.getId());
 
-        receiptDao.storeReceipt(new_receipt);
-        System.out.println("worked");
-
-
-
-
+        for(String s : services)
+        {
+            Item tempItem = new Item();
+            tempItem.setReceipt_id(new_receipt.getId());
+            tempItem.setService_id(Integer.parseInt(s));
+            itemDao.store(tempItem);
+        }
         Map<String, Object> model = new HashMap<>();
         model.put("services", serviceDao.getAllServices());
 

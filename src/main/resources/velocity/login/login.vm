@@ -1,4 +1,4 @@
-#parse("/velocity/layout.vm")
+#parse("/velocity/layout_original.vm")
 #@mainLayout()
 <form id="loginForm" method="post">
     #if($authenticationFailed)
@@ -9,9 +9,9 @@
         <p class="notification">$msg.get("LOGIN_LOGGED_OUT")</p>
     #end
     <h1>$msg.get("LOGIN_HEADING")</h1>
-    <p>$msg.get("LOGIN_INSTRUCTIONS", $WebPath.getINDEX())</p>
-    <label>$msg.get("LOGIN_LABEL_USERNAME")</label>
-    <input type="text" name="username" placeholder="$msg.get("LOGIN_LABEL_USERNAME")" value="" required>
+##    <p>$msg.get("LOGIN_INSTRUCTIONS", $WebPath.getINDEX())</p>
+    <label>Email</label>
+    <input type="text" name="email" placeholder="email" value="" required>
     <label>$msg.get("LOGIN_LABEL_PASSWORD")</label>
     <input type="password" name="password" placeholder="$msg.get("LOGIN_LABEL_PASSWORD")" value="" required>
     #if($loginRedirect)
@@ -20,3 +20,5 @@
     <input type="submit" value="$msg.get("LOGIN_BUTTON_LOGIN")">
 </form>
 #end
+
+
