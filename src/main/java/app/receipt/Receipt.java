@@ -1,7 +1,9 @@
 package app.receipt;
 
 
+import app.Application;
 import app.item.Item;
+import app.util.Misc;
 
 import java.util.List;
 
@@ -79,7 +81,7 @@ public class Receipt {
          boolean truth = true;
          for(Item i : assignedItems)
          {
-             if(i.getStatus() == 0)
+             if(i.getStatus() == Misc.STATUS_ITEM_DIRTY)
              {
                  truth = false;
                  break;

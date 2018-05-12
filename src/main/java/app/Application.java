@@ -28,6 +28,8 @@ public class Application {
     public static ReceiptDao receiptDao;
     public static ItemDao itemDao;
 
+
+
     public static void main(String[] args) {
 
         SessionFactory sessionFactory = HibernateUtility.getSessionFactory();
@@ -38,9 +40,6 @@ public class Application {
         serviceDao = new ServiceDao();
         receiptDao = new ReceiptDao();
         itemDao = new ItemDao();
-
-
-
 
         // Configure Spark
         port(4567);

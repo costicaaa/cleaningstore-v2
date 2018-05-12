@@ -42,7 +42,7 @@
                                             <td>$item.service.getName()</td>
                                             <td>$item.service.getPrice()</td>
                                             <td>
-                                                #if($item.getStatus() == 0)
+                                                #if($item.getStatus() == $Utils.STATUS_ITEM_DIRTY)
                                                     Dirty
                                                 #else
                                                     Clean
@@ -54,7 +54,7 @@
                                                 #end
                                             </td>
                                             <td>
-                                                #if($item.getStatus() == 0)
+                                                #if($item.getStatus() == $Utils.STATUS_ITEM_DIRTY)
                                                 <a class="btn btn-dark"
                                                    href="$WebPath.getRECEIPTS_CLEAN_ITEM_PATH()$item.getId()"
                                                     >Clean!
