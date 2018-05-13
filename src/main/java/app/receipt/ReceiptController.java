@@ -62,6 +62,7 @@ public class ReceiptController {
         Receipt receipt = receiptDao.getReceiptById(getParamId(request));
         if(receipt.checkIfAllItemsClean())
         {
+            receiptDao.returnReceipt(receipt);
             model.put("receipts", receiptDao.getAllReceipts());
             model.put("showMessage", true);
             model.put("message", "Status updated");
