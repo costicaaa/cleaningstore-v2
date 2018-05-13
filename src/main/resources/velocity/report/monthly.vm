@@ -1,0 +1,55 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Reports</h2>
+        </div>
+    </div>
+
+    <section class="margin-bottom-sm">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-lg-12">
+                    <div class="stats-with-chart-1 block">
+                        <div class="title"> <strong class="d-block"></strong>
+                        </div>
+                        <div id="piechart" style="width: auto; height: 500px;"></div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        #set($mapp = $data)
+
+        var data = google.visualization.arrayToDataTable([
+            ['Service', 'Total'],
+            #foreach($key in $mapp.keySet() )
+                ['$key', $mapp.get($key) ] #if( $foreach.hasNext ), #end
+            #end
+        ]);
+
+        var options = {
+            title: 'Income Report by Service',
+            backgroundColor: '#393b40',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+</script>
+#end

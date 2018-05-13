@@ -137,12 +137,17 @@
                 <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                     <li><a href="$WebPath.getRECEIPTS()">List</a></li>
                     <li><a href="$WebPath.getRECEIPTS_ADD()">Add new +</a></li>
-                    <li><a href="#">Search</a></li>
+##                    <li><a href="#">Search</a></li>
                 </ul>
             </li>
 ##        #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
             <li><a href="$WebPath.getUSERS()"> <i class="icon-user"></i>Users </a></li>
-            <li><a href="#"> <i class="icon-pie-chart"></i>Reports </a></li>
+            <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-pie-chart"></i>Reports</a>
+                <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
+                    <li><a href="$WebPath.getREPORTS_MONTHLY()">Monthly Sales</a></li>
+                    <li><a href="$WebPath.getREPORTS_CLIENT_SEARCH()">Per Client</a></li>
+                </ul>
+            </li>
 ##        #end
         </ul>
         <!--<span class="heading">Extras</span>-->

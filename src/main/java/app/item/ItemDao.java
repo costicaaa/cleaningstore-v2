@@ -7,7 +7,11 @@ import app.item.Item;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ItemDao extends HibernateUtility{
@@ -15,6 +19,18 @@ public class ItemDao extends HibernateUtility{
     public void store(Item tempItem)
     {
         getSessionFactory().openSession().save(tempItem);
+    }
+
+    public List<Item> getAllItemsCleanedMonth(Integer month_number)
+    {
+        String hql = "FROM app.item.Item where month(cleaning_date) = :search_constraint";
+        Session session = getSessionFactory().openSession();
+        Query query = session
+                .createQuery(hql)
+                .setParameter("search_constraint", month_number);
+        List<Item> items = query.list();
+
+        return items;
     }
 
     public Item getItemById(int id)
