@@ -55,9 +55,13 @@ public class UserController {
         user.setPassword(Misc.hashPW(password));
         user.setRole(Integer.parseInt(role));
 
-        if(request.queryParams("update") == "yes")
+        if(request.queryParams("update").equals("yes"))
         {
             userDao.update(user);
+            model.put("user", user);
+            model.put("showMessage", true);
+            model.put("message", "User info updated");
+            return ViewUtil.render(request, model, Path.Template.USERS_VIEW);
         }
         else
         {
@@ -77,7 +81,6 @@ public class UserController {
                 return ViewUtil.render(request, model, Path.Template.USERS_ADD);
             }
         }
-        return null;
     };
 
     public static Route serveIndexPage = (Request request, Response response) -> {

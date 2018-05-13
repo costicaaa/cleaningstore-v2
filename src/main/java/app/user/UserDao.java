@@ -39,7 +39,6 @@ public class UserDao extends HibernateUtility
         Session session = getSessionFactory().openSession();
         Transaction tx = null;
         java.util.Date dt = new java.util.Date();
-        //todo :: redirect messages
         try{
             tx = session.beginTransaction();
             session.update(user);
