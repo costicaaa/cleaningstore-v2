@@ -2,6 +2,7 @@ package app.report;
 
 
 import app.item.Item;
+import app.login.LoginController;
 import app.receipt.Receipt;
 import app.service.Service;
 import app.user.User;
@@ -18,6 +19,8 @@ import static app.Application.*;
 
 public class ReportController {
     public static Route serveReportsMonthlyPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         Map<String, Object> model = new HashMap<>();
 
         Calendar now = Calendar.getInstance();
@@ -52,12 +55,16 @@ public class ReportController {
     };
 
     public static Route serveSearchClientPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         Map<String, Object> model = new HashMap<>();
 
         return ViewUtil.render(request, model, Path.Template.REPORTS_CLIENT_SEARCH);
     };
 
     public static Route serveViewClientPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         Map<String, Object> model = new HashMap<>();
         List<Receipt> receipts = receiptDao.getAllReceiptsForClient(request.queryParams("email"));
         for(Receipt r : receipts)

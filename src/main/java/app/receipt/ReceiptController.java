@@ -17,6 +17,7 @@ import app.item.*;
 public class ReceiptController {
 
     public static Route serveIndexPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
         Map<String, Object> model = new HashMap<>();
 
         List<Receipt> receipts = receiptDao.getAllReceipts();
@@ -26,6 +27,8 @@ public class ReceiptController {
     };
 
     public static Route serveViewPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+
         HashMap<String, Object> model = new HashMap<>();
 
         Receipt receipt = receiptDao.getReceiptById(getParamId(request));
@@ -35,6 +38,8 @@ public class ReceiptController {
     };
 
     public static Route cleanItem = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+
         HashMap<String, Object> model = new HashMap<>();
 
         try
@@ -57,6 +62,8 @@ public class ReceiptController {
     };
 
     public static Route returnReceipt = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+
         HashMap<String, Object> model = new HashMap<>();
 
         Receipt receipt = receiptDao.getReceiptById(getParamId(request));
@@ -79,6 +86,8 @@ public class ReceiptController {
     };
 
     public static Route serveAddPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+
         Map<String, Object> model = new HashMap<>();
         model.put("services", serviceDao.getAllServices());
 
@@ -86,6 +95,8 @@ public class ReceiptController {
     };
 
     public static Route storeReceipt = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+
         //request params
         String name = request.queryParams("name");
         String email = request.queryParams("email");

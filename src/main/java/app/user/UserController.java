@@ -1,5 +1,6 @@
 package app.user;
 
+import app.login.LoginController;
 import app.util.Misc;
 import app.util.Path;
 import app.util.ViewUtil;
@@ -42,21 +43,26 @@ public class UserController {
     }
 
     public static Route saveUser = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         //request params
         Map<String, Object> model = new HashMap<>();
         String name = request.queryParams("name");
-        String email = request.queryParams("email");
         String password = request.queryParams("password");
         String role = request.queryParams("role");
 
         User user = new User();
         user.setName(name);
-        user.setEmail(email);
         user.setPassword(Misc.hashPW(password));
         user.setRole(Integer.parseInt(role));
 
         if(request.queryParams("update").equals("yes"))
         {
+            user = userDao.getUserById(Integer.parseInt(request.queryParams("user_id")));
+            user.setName(name);
+            user.setPassword(Misc.hashPW(password));
+            user.setRole(Integer.parseInt(role));
+
             userDao.update(user);
             model.put("user", user);
             model.put("showMessage", true);
@@ -84,6 +90,8 @@ public class UserController {
     };
 
     public static Route serveIndexPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         Map<String, Object> model = new HashMap<>();
 
         List<User> users = userDao.getAllUsers();
@@ -93,6 +101,8 @@ public class UserController {
     };
 
     public static Route serveViewPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         HashMap<String, Object> model = new HashMap<>();
 
         User user = userDao.getUserById(getParamId(request));
@@ -103,6 +113,8 @@ public class UserController {
 
 
     public static Route serveAddPage = (Request request, Response response) -> {
+        LoginController.ensureUserIsLoggedIn(request, response);
+        LoginController.ensureUserIsAdmin(request, response);
         Map<String, Object> model = new HashMap<>();
         model.put("services", serviceDao.getAllServices());
 

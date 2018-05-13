@@ -25,6 +25,7 @@
                         <th>Entry Date</th>
                         <th>Return Date</th>
                         <th>Items</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,6 +48,9 @@
                                     $item.service.name
                                     <br>
                                 #end
+                            </td>
+                            <td>
+                                <a class="btn btn-dark" href="$WebPath.getRECEIPTS()$receipt.getId()">View</a>
                             </td>
                         </tr>
 
