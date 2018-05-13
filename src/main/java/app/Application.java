@@ -4,6 +4,7 @@ import app.book.*;
 import app.index.*;
 import app.login.*;
 import app.receipt.ReceiptController;
+import app.report.ReportController;
 import app.ticket.TicketController;
 import app.user.*;
 import app.util.*;
@@ -54,7 +55,6 @@ public class Application {
         // Set up before-filters (called before each get/post)
         before("*",                       Filters.addTrailingSlashes);
         before("*",                       Filters.handleLocaleChange);
-
         // Set up routes
         get(    Path.Web.INDEX,                 IndexController.serveIndexPage);
         get(    Path.Web.BOOKS,                 BookController.fetchAllBooks);
@@ -62,24 +62,26 @@ public class Application {
         get(    Path.Web.LOGIN,                 LoginController.serveLoginPage);
         post(   Path.Web.LOGIN,                 LoginController.handleLoginPost);
         post(   Path.Web.LOGOUT,                LoginController.handleLogoutPost);
-
-
+        //
         get(    Path.Web.RECEIPTS,              ReceiptController.serveIndexPage);
         get(    Path.Web.RECEIPTS_ADD,          ReceiptController.serveAddPage);
         get(    Path.Web.RECEIPTS_RETURN,       ReceiptController.returnReceipt);
         get(    Path.Web.RECEIPTS_VIEW,         ReceiptController.serveViewPage);
         post(   Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
         get(    Path.Web.RECEIPTS_CLEAN_ITEM,   ReceiptController.cleanItem);
-
-
+        //
         get(    Path.Web.USERS,                 UserController.serveIndexPage);
         get(    Path.Web.USERS_ADD,             UserController.serveAddPage);
         get(    Path.Web.USERS_VIEW,            UserController.serveViewPage);
         post(   Path.Web.USERS_SAVE,            UserController.saveUser);
+        //
+        get(    Path.Web.REPORTS_MONTHLY,       ReportController.serveReportsMonthlyPage);
+        get(    Path.Web.REPORTS_CLIENT_SEARCH, ReportController.serveSearchClientPage);
+        post(   Path.Web.REPORTS_CLIENT_VIEW,   ReportController.serveViewClientPage);
+
 
 
         get("*",                     ViewUtil.notFound);
-
         //Set up after-filters (called after each get/post)
         after("*",                   Filters.addGzipHeader);
 

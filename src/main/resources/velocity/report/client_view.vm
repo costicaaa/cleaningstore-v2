@@ -1,0 +1,72 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Receipts</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="block">
+            #if($receipts)
+                <p>
+                    History for $client
+                </p>
+                <table id="receiptsTable" class="table ">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Price</th>
+                        <th>Entry Date</th>
+                        <th>Return Date</th>
+                        <th>Items</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($receipt in $receipts)
+                        <tr>
+                            <td>$receipt.getId()</td>
+                            <td>$receipt.getCustomer_name()</td>
+                            <td>$receipt.getCustomer_email()</td>
+                            <td>$receipt.getPrice()</td>
+                            <td>
+                                $Utils.formatDate($receipt.getEntry_date())
+                            </td>
+                            <td>
+                                #if($receipt.getReturn_date())
+                                            $Utils.formatDate($receipt.getReturn_date())
+                                        #end
+                            </td>
+                            <td>
+                                #foreach($item in $receipt.assignedItems)
+                                    $item.service.name
+                                    <br>
+                                #end
+                            </td>
+                            <td>
+                                <a class="btn btn-dark" href="$WebPath.getRECEIPTS()$receipt.getId()">View</a>
+                            </td>
+                        </tr>
+
+                        #end
+
+                    </tbody>
+                </table>
+            #else
+                No data found for given email, please <a href="$WebPath.serveSearchClientPage()">search again</a>.
+            #end
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+#end

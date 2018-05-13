@@ -27,6 +27,18 @@ public class ReceiptDao extends HibernateUtility{
         return results;
     }
 
+    public List<Receipt> getAllReceiptsForClient(String client_email)
+    {
+        String hql = "FROM app.receipt.Receipt where customer_email = :client_email order by id desc ";
+        Session session = getSessionFactory().openSession();
+        Query query = session
+                .createQuery(hql)
+                .setParameter("client_email", client_email);
+        List<Receipt> results = query.list();
+
+        return results;
+    }
+
     public List<Item> getItemsForReceipt(int receipt_id)
     {
         String hql = "FROM app.item.Item where receipt_id = :id";

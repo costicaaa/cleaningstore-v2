@@ -25,6 +25,10 @@ public class Path {
         @Getter public static final String RECEIPTS_RETURN = RECEIPTS_RETURN_PATH + helperID;
 
 
+        @Getter public static final String REPORTS_MONTHLY = "/reports/monthly/";
+        @Getter public static final String REPORTS_CLIENT_SEARCH = "/reports/search/";
+        @Getter public static final String REPORTS_CLIENT_VIEW = "/reports/client/";
+
 
         @Getter public static final String USERS = "/users/";
         @Getter public static final String USERS_ADD = "/users/add/";
@@ -49,6 +53,11 @@ public class Path {
         public static final String USERS = "/velocity/user/all.vm";
         public static final String USERS_VIEW = "/velocity/user/view.vm";
         public static final String USERS_ADD = "/velocity/user/add.vm";
+
+        public static final String REPORTS_MONTHLY = "/velocity/report/monthly.vm";
+        public static final String REPORTS_CLIENT_SEARCH = "/velocity/report/search_by_client.vm";
+        public static final String REPORTS_CLIENT_VIEW = "/velocity/report/client_view.vm";
+
     }
 
 }

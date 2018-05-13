@@ -9,6 +9,8 @@
         <p class="notification">$msg.get("LOGIN_LOGGED_OUT")</p>
     #end
     <h1>$msg.get("LOGIN_HEADING")</h1>
+    <p>Admin account : admin@example.com / asd123</p>
+    <p>Employee account : notadmin@example.com / asd123</p>
 ##    <p>$msg.get("LOGIN_INSTRUCTIONS", $WebPath.getINDEX())</p>
     <label>Email</label>
     <input type="text" name="email" placeholder="email" value="" required>

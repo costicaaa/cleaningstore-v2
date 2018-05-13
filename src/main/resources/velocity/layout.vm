@@ -120,14 +120,14 @@
             <div class="avatar"><img src="/dark-theme/img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
             <div class="title">
                 <h1 class="h5">
-##                    $currentUser
+                    $currentUser
                 </h1>
 ##                todo :: see WHY DA FUCK $Utils.{property} is not available here ||| SOLVED FUCKING LOMBOK SHIT
-##                    #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
+                    #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
                         <p>Admin</p>
-##                    #else
+                    #else
                         <p>Employee</p>
-##                    #end
+                    #end
 
             </div>
         </div>
@@ -137,20 +137,20 @@
                 <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                     <li><a href="$WebPath.getRECEIPTS()">List</a></li>
                     <li><a href="$WebPath.getRECEIPTS_ADD()">Add new +</a></li>
-                    <li><a href="#">Search</a></li>
+##                    <li><a href="#">Search</a></li>
                 </ul>
             </li>
-##        #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
+        #if($currentUserRole == $Utils.getUSER_ROLE_ADMIN())
             <li><a href="$WebPath.getUSERS()"> <i class="icon-user"></i>Users </a></li>
-            <li><a href="#"> <i class="icon-pie-chart"></i>Reports </a></li>
-##        #end
+            <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-pie-chart"></i>Reports</a>
+                <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
+                    <li><a href="$WebPath.getREPORTS_MONTHLY()">Current Month - Sales by service</a></li>
+                    <li><a href="$WebPath.getREPORTS_CLIENT_SEARCH()">Per Client</a></li>
+                </ul>
+            </li>
+        #end
         </ul>
-        <!--<span class="heading">Extras</span>-->
-        <!--<ul class="list-unstyled">-->
-        <!--<li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>-->
-        <!--<li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>-->
-        <!--<li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>-->
-        <!--</ul>-->
+
     </nav>
     <!-- Sidebar Navigation end-->
 ##    <div id="content">

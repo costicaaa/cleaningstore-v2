@@ -48,6 +48,12 @@ public class LoginController {
             request.session().attribute("loginRedirect", request.pathInfo());
             response.redirect(Path.Web.LOGIN);
         }
-    };
+    }
+
+    public static void ensureUserIsAdmin(Request request, Response response) {
+        if (Integer.parseInt(request.session().attribute("currentUserRole")) != Misc.USER_ROLE_ADMIN) {
+            response.redirect(Path.Web.LOGIN);
+        }
+    }
 
 }
