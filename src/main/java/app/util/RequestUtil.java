@@ -12,8 +12,12 @@ public class RequestUtil {
         return request.params("isbn");
     }
 
+    public static Integer getParamId(Request request) {
+        return Integer.parseInt(request.params("id"));
+    }
+
     public static String getQueryUsername(Request request) {
-        return request.queryParams("username");
+        return request.queryParams("email");
     }
 
     public static String getQueryPassword(Request request) {
@@ -31,6 +35,10 @@ public class RequestUtil {
     public static String getSessionCurrentUser(Request request) {
         return request.session().attribute("currentUser");
     }
+    public static String getSessionCurrentUserRole(Request request) {
+        return request.session().attribute("currentUserRole");
+    }
+
 
     public static boolean removeSessionAttrLoggedOut(Request request) {
         Object loggedOut = request.session().attribute("loggedOut");

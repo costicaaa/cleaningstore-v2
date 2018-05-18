@@ -4,6 +4,8 @@ import app.user.*;
 import app.util.*;
 import spark.*;
 import java.util.*;
+
+import static app.Application.userDao;
 import static app.util.RequestUtil.*;
 
 public class LoginController {
@@ -17,16 +19,19 @@ public class LoginController {
 
     public static Route handleLoginPost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        if (!UserController.authenticate(getQueryUsername(request), getQueryPassword(request))) {
+        String email = getQueryUsername(request);
+        if (!UserController.authenticate(email, getQueryPassword(request))) {
             model.put("authenticationFailed", true);
             return ViewUtil.render(request, model, Path.Template.LOGIN);
         }
         model.put("authenticationSucceeded", true);
-        request.session().attribute("currentUser", getQueryUsername(request));
-        if (getQueryLoginRedirect(request) != null) {
-            response.redirect(getQueryLoginRedirect(request));
-        }
-        return ViewUtil.render(request, model, Path.Template.LOGIN);
+        User user = userDao.getUserByEmail(email);
+
+        request.session().attribute("currentUser", user.getName());
+        request.session().attribute("currentUserRole", user.getRole().toString());
+        response.redirect(Path.Web.RECEIPTS);
+
+        return null; // java is shit , return null
     };
 
     public static Route handleLogoutPost = (Request request, Response response) -> {
@@ -43,6 +48,12 @@ public class LoginController {
             request.session().attribute("loginRedirect", request.pathInfo());
             response.redirect(Path.Web.LOGIN);
         }
-    };
+    }
+
+    public static void ensureUserIsAdmin(Request request, Response response) {
+        if (Integer.parseInt(request.session().attribute("currentUserRole")) != Misc.USER_ROLE_ADMIN) {
+            response.redirect(Path.Web.LOGIN);
+        }
+    }
 
 }
