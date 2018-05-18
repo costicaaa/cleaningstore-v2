@@ -2,25 +2,30 @@ package app.user;
 
 import org.mindrot.jbcrypt.*;
 import static app.Application.userDao;
+import app.user.UserDao;
 
 public class UserController {
 
+    static String salt = "$2a$10$h.dl5J86rGH7I8bD9bZeZe";
     // Authenticate the user by hashing the inputted password using the stored salt,
     // then comparing the generated hashed password to the stored hashed password
     public static boolean authenticate(String username, String password) {
-        System.out.println("\nauthenticate");
-        if (username.isEmpty() || password.isEmpty()) {
-            System.out.println("\nceva empty");
-            return false;
-        }
+//        if (username.isEmpty() || password.isEmpty()) {
+//            System.out.println("\nceva empty");
+//            return false;
+//        }
         User user = userDao.getUserByUsername(username,password);
-        if (user.getEmail() == null) {
-            System.out.println("getUser failed");
+        if (user.getUsername() == null) {
+            System.out.println("\nauthenticate failed");
             return false;
         }
-        //String hashedPassword = BCrypt.hashpw(password, user.getSalt());
+        System.out.println("\nauthenticate succeded");
+
+        user.setHashedPassword(BCrypt.hashpw(password, salt));
+        System.out.println("Crypted pass:\n" + user.getHashedPassword());
+
+        //String hashedPassword = BCrypt.hashpw(password, salt);
         //return hashedPassword.equals(user.getHashedPassword());
-        System.out.println(user.getName()+user.getRole()+user.getEmail()+user.getPassword());
 
         //return password.equals(user.getPassword());
         return true;

@@ -2,11 +2,11 @@
         PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         " http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="User" table="users">
+    <class name="app.user.User" table="users">
         <id name="id" type="int" column="ID">
             <generator class="identity" />
         </id>
-        <property name = "name" column = "name" type = "string"/>
+        <property name = "username" column = "name" type = "string"/>
         <property name = "email" column = "email" type = "string"/>
         <property name = "role" column = "role" type = "int"/>
         <property name = "password" column = "password" type = "string"/>

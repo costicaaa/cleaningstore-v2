@@ -4,24 +4,30 @@ import lombok.*;
 
 // All fields are private and final. Getters (but not setters) are generated (https://projectlombok.org/features/Value.html)
 public class User {
-    private int id;
-    private String name;
+    int id;
+    private String username;
     private String email;
     private int role;
     private String password;
-    String salt;
+    //String salt;
     String hashedPassword;
 
-    User() {
-        System.out.println("user constructor");
+    User() {}
+
+    public int getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public int getRole() {
@@ -48,13 +54,13 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
-        return "$2a$10$h.dl5J86rGH7I8bD9bZeZe";
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
+//    public String getSalt() {
+//        return "$2a$10$h.dl5J86rGH7I8bD9bZeZe";
+//    }
+//
+//    public void setSalt(String salt) {
+//        this.salt = salt;
+//    }
 
     public String getHashedPassword() {
         return hashedPassword;

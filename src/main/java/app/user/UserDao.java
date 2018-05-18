@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 
 import java.util.*;
 import java.util.stream.*;
+import app.user.User;
 
 public class UserDao extends HibernateUtility{
 
@@ -17,10 +18,11 @@ public class UserDao extends HibernateUtility{
 //            //new User("federico",  "$2a$10$E3DgchtVry3qlYlzJCsyxe", "$2a$10$E3DgchtVry3qlYlzJCsyxeSK0fftK4v0ynetVCuDdxGVl1obL.ln2")
 //    );
 
+
     public User getUserByUsername(String username, String password) {
-        String hql = "select * from users s where s.name = username and s.password = :password";
         Session session = getSessionFactory().openSession();
-        Query query = session.createSQLQuery(hql)
+        Query query = session.createSQLQuery(
+                "select * from users s where s.email = :username and s.password = :password")
                 .addEntity(app.user.User.class)
                 .setParameter("username", username)
                 .setParameter("password", password);
@@ -28,29 +30,12 @@ public class UserDao extends HibernateUtility{
         try
         {
             result = (User) query.getSingleResult();
-            System.out.println("ajunge aici");
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
         return result;
-//        User u = new User();
-//        Query query = u.getSession().createSQLQuery(
-//                "select * from users s where s.name = :username")
-//                .addEntity(User.class)
-//                .setParameter("username", username);
-//        User result = new User();
-//        try
-//        {
-//            result = (User) query.getSingleResult();
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        return result;
-
         //return users.stream().filter(b -> b.getUsername().equals(username)).findFirst().orElse(null);
     }
 

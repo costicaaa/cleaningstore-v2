@@ -11,7 +11,7 @@ public class HibernateUtility {
     private static HibernateUtility instance = null;
 
     private static SessionFactory sessionFactory;
-    private static StandardServiceRegistry serviceRegistry;
+    //private static StandardServiceRegistry serviceRegistry;
 
     protected HibernateUtility(){
 //        Configuration configuration = new Configuration();

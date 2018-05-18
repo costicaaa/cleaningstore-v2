@@ -22,7 +22,10 @@ public class LoginController {
             return ViewUtil.render(request, model, Path.Template.LOGIN);
         }
         model.put("authenticationSucceeded", true);
+        System.out.println("user logat");
         request.session().attribute("currentUser", getQueryUsername(request));
+        request.session().attribute("currentUserRole", getQueryRole(request));
+        request.session().attribute("currentUserPassword", getQueryHashPassword(request));
         if (getQueryLoginRedirect(request) != null) {
             response.redirect(getQueryLoginRedirect(request));
         }
@@ -30,16 +33,18 @@ public class LoginController {
     };
 
     public static Route handleLogoutPost = (Request request, Response response) -> {
+        System.out.println("user delogat");
         request.session().removeAttribute("currentUser");
+        request.session().removeAttribute("currentUserRole");
         request.session().attribute("loggedOut", true);
-        response.redirect(Path.Web.LOGIN);
+        response.redirect(Path.Web.LOGOUT);
         return null;
     };
 
     // The origin of the request (request.pathInfo()) is saved in the session so
     // the user can be redirected back after login
     public static void ensureUserIsLoggedIn(Request request, Response response) {
-        if (request.session().attribute("currentUser") == null) {
+        if (request.session().attribute("currentUser") == null ) {
             request.session().attribute("loginRedirect", request.pathInfo());
             response.redirect(Path.Web.LOGIN);
         }

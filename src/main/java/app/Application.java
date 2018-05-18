@@ -33,6 +33,7 @@ public class Application {
         // Instantiate your dependencies
         bookDao = new BookDao();
         userDao = new UserDao();
+
         serviceDao = new ServiceDao();
         receiptDao = new ReceiptDao();
 
@@ -59,8 +60,8 @@ public class Application {
 
 
         get(  Path.Web.RECEIPTS_ADD,        ReceiptController.serveAddPage);
-        get(  Path.Web.RECEIPTS,        ReceiptController.serveIndexPage);
-        post( Path.Web.RECEIPTS_STORE,        ReceiptController.storeReceipt);
+        get(  Path.Web.RECEIPTS,            ReceiptController.serveIndexPage);
+        post( Path.Web.RECEIPTS_STORE,      ReceiptController.storeReceipt);
 
 
         get("*",                     ViewUtil.notFound);
