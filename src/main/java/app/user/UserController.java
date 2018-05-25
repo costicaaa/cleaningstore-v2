@@ -49,12 +49,14 @@ public class UserController {
         Map<String, Object> model = new HashMap<>();
         String name = request.queryParams("name");
         String password = request.queryParams("password");
+        String email = request.queryParams("email");
         String role = request.queryParams("role");
 
         User user = new User();
         user.setName(name);
         user.setPassword(Misc.hashPW(password));
         user.setRole(Integer.parseInt(role));
+        user.setEmail(email);
 
         if(request.queryParams("update").equals("yes"))
         {
@@ -75,6 +77,7 @@ public class UserController {
             {
                 userDao.save(user);
                 model.put("user", user);
+                model.put("email", email);
                 model.put("showMessage", true);
                 model.put("message", "User saved!");
                 return ViewUtil.render(request, model, Path.Template.USERS_VIEW);
