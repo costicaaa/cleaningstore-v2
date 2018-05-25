@@ -131,6 +131,9 @@ public class ReceiptController {
         Map<String, Object> model = new HashMap<>();
         model.put("services", serviceDao.getAllServices());
 
+        model.put("showMessage", true);
+        model.put("message", "Receipt with id #" + new_receipt.getId() + " saved! You can now enter another one.");
+
         return ViewUtil.render(request, model, Path.Template.RECEIPTS_ADD);
     };
 }
